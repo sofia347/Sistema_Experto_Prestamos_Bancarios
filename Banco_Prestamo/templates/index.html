@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Riesgo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            width: 50%;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Evaluación de Sistema Experto para la Aprobación de Préstamos Bancarios</h1>
+
+    <form action="/" method="POST">
+        <h2>Agregar Nuevo Cliente</h2>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="number" name="puntuacion_crediticia" placeholder="Puntuación Crediticia" required>
+        <input type="number" name="ingresos_mensuales" placeholder="Ingresos Mensuales" required>
+        <input type="number" name="cuota_prestamo" placeholder="Cuota del Préstamo" required>
+        <input type="number" name="deuda_actual" placeholder="Deuda Actual (%)" required>
+        <select name="tipo_empleo">
+            <option value="fijo_5_anios">Fijo (+5 años)</option>
+            <option value="fijo_menos5_anios">Fijo (-5 años)</option>
+            <option value="temporal">Contrato temporal o autónomo</option>
+        </select>
+        <select name="garantias">
+            <option value="propiedad">Propiedad inmueble / aval de alto valor</option>
+            <option value="aval_bajo_valor">Aval Bajo Valor</option>
+            <option value="sin_garantia">Sin Garantía</option>
+        </select>
+        <select name="historial_prestamos">
+            <option value="sin_retrasos">Pagados sin retrasos</option>
+            <option value="retrasos_ocacionales">Retrasos Ocasionales</option>
+            <option value="impagos">Impagos</option>
+        </select>
+        <p>
+        <label>¿Es la primera vez?</label>
+        <select name="primera_vez">
+            <option value="True">Sí</option>
+            <option value="False">No</option>
+        </select>
+        <button type="submit">Evaluar Cliente</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Puntuación Crediticia</th>
+            <th>Ingresos Mensuales</th>
+            <th>Cuota del Préstamo</th>
+            <th>Deuda Actual (%)</th>
+            <th>Tipo de Empleo</th>
+            <th>Garantías</th>
+            <th>Historial de Préstamos</th>
+            <th>¿Primera Vez?</th>
+            <th>Clasificación</th>
+        </tr>
+        {% for cliente in resultados %}
+        <tr>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.puntuacion_crediticia }}</td>
+            <td>${{ cliente.ingresos_mensuales }}</td>
+            <td>${{ cliente.cuota_prestamo }}</td>
+            <td>{{ cliente.deuda_actual }}%</td>
+            <td>{{ cliente.tipo_empleo }}</td>
+            <td>{{ cliente.garantias }}</td>
+            <td>{{ cliente.historial_prestamos }}</td>
+            <td>{{ "Sí" if cliente.primera_vez else "No" }}</td>
+            <td><strong>{{ cliente.clasificacion }}</strong></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
+
